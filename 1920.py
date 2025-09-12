@@ -1,0 +1,12 @@
+# https://www.acmicpc.net/problem/1920
+
+n = int(input())
+a = set(map(int, input().split()))
+m = int(input())
+b = list(map(int, input().split()))
+
+for x in b:
+    if x in a:
+        print(1)
+    else:
+        print(0)
