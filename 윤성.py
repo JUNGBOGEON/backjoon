@@ -1,27 +1,20 @@
 import sys
 input = sys.stdin.readline
 
+cabinet = []
+n = int(input())
+for _ in range(n):
+    start, end = map(int, input().strip().split())
+    cabinet.append((start, end))
 
-n, k = map(int, input().split())
+cabinet.sort(key = lambda x: (x[1], x[0]))
 
-coins = [int(input()) for _ in range(n)]
+cnt_meeting = 0
+end_time = 0
 
-coins.sort(reverse=True)
-cnt_price = 0
-def best_coins(coins, target_price, idx = 0, cnt = 0):
-    if target_price == 0: # 나머지가 0이면 지금까지 cnt 리턴 아니면 계속 진행
-        return cnt
-    
-    if idx >= len(coins):
-        return float('inf')
-    
-    coin = coins[idx]
-    
-    use_cnt = target_price // coin # 쓸수 있는 동전의 갯수 카운트 
-    if use_cnt > 0:
-        cnt += use_cnt # 사용한 동전 카운트
-        target_price %= coin # 나머지 체크
-        
-    return best_coins(coins, target_price, idx + 1, cnt) # 인덱스를 늘려주면서 다음 동전 사용
-        
-print(best_coins(coins, k))
+for meeting_times in cabinet:
+    if meeting_times[0] >= end_time:
+        cnt_meeting += 1
+        end_time = meeting_times[1]
+
+print(cnt_meeting)
